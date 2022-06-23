@@ -9,13 +9,14 @@ const Category = require('../../models/category')
 router.get('/', async (req, res) => {
   try {
     let totalAmount = 0
+    const userId = req.user._id
     // Get category data from database
     const categoryFromDb = await Category.find().lean()
     const category = {}
     categoryFromDb.forEach(item => category[item._id] = item)
 
     // Get records from database and
-    const recordsFromDb = await Record.find().lean()
+    const recordsFromDb = await Record.find({ userId }).lean()
     const records = []
     recordsFromDb.forEach(item => {
       //  Get related icon
