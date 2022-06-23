@@ -1,0 +1,41 @@
+<div class="container mt-5 mb-5">
+  <div class="col-md-10 mx-auto">
+
+    {{!-- Category selections --}}
+
+
+    {{!-- Total amount --}}
+    <div class="total-amount">
+      <p>總金額：</p>
+      <p>$ {{totalAmount}} 元</p>
+    </div>
+
+    {{!-- Record list --}}
+
+    <div class="record-list">
+      <ul class="list-group">
+        {{#each records}}
+        <li class="list-group-item">
+          <div class="row p-0">
+            <div class="col-auto">
+              <i class="{{this.icon}} list-icon"></i>
+            </div>
+            <div class="col">
+              <p>{{this.name}}</p>
+              <figcaption>{{this.date}}</figcaption>
+            </div>
+            <div class="col">{{this.amount}}</div>
+            <div class="col">
+              <button class="btn btn-primary">修改</button>
+              <button class="btn btn-danger">刪除</button>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+  </div>
+
+
+</div>
