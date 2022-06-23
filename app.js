@@ -2,6 +2,8 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
+const bodyParser = require('body-parser')
 const routes = require('./routes')
 
 require('./config/mongoose')
@@ -15,7 +17,12 @@ app.set('view engine', 'hbs')
 
 // Middleware
 app.use(express.static('public'))
-
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 // Routes
 app.use(routes)
 
