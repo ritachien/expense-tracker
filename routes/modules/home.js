@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
     //  Get related icon
     item.icon = category[item.categoryId].icon
     // Format date
-    item.date = dayjs(item.date).format('YYYY-MM-DD')
+    item.date = item.date.toJSON().toString().slice(0, 10)
     totalAmount += item.amount
   })
 
