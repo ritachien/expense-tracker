@@ -1,4 +1,4 @@
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5 index-form">
   <div class="col-md-10 mx-auto">
 
     {{!-- Category selections --}}
@@ -19,8 +19,8 @@
 
     {{!-- Total amount --}}
     <div class="total-amount">
-      <p>總金額：</p>
-      <p>$ {{totalAmount}} 元</p>
+      <p class="amount-title">總金額：</p>
+      <p class="amount-number">$ {{totalAmount}} 元</p>
     </div>
 
     {{!-- Record list --}}
@@ -49,7 +49,7 @@
         {{/each}}
       </ul>
     </div>
-    <a href="/records/new" class="btn btn-primary">新增項目</a>
+    <a href="/records/new" class="btn btn-primary mt-5">新增項目</a>
   </div>
 
 
