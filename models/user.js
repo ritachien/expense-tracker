@@ -8,6 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   createAt: { type: Date, default: Date.now },
+  seed: { type: Boolean, default: false }
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -27,6 +27,10 @@ const recordSchema = new Schema({
     ref: 'Category',
     index: true,
     required: true
+  },
+  seed: {
+    type: Boolean,
+    default: false
   }
 
 })
