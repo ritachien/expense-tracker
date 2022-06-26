@@ -13,3 +13,36 @@ body {
   font-size: 35px;
   color: #0099ff;
 }
+
+.user-form {
+  margin: 10vh auto;
+  max-width: 500px;
+  background-color: #c9e0e9;
+  border-radius: 8px;
+  padding: 20px 5px;
+  border: 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  color: #0957b1;
+}
+
+.auth-login {
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.btn-auth {
+  border: none;
+}
+
+.btn-facebook {
+  font-weight: 500;
+  color: #FFFFFF;
+  background-color: #4267B2;
+}
+
+.btn-google {
+  font-weight: bolder;
+  letter-spacing: 2px;
+  color: #000000;
+  background-color: #FFFFFF;
+}
