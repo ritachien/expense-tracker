@@ -1,0 +1,40 @@
+<div class="container user-form">
+  <div class="row">
+    <div class="m-auto">
+      <h1 class="text-center my-3">Account Info</h1>
+      <hr>
+      {{>message}}
+      <form action="/account?_method=PUT" method="POST">
+        <div class="form-group mt-2">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter name" value="{{user.name}}">
+        </div>
+        <div class="form-group mt-2">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+            value="{{user.email}}" disabled>
+        </div>
+        <div class=" form-group mt-3">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter New Password">
+        </div>
+        <div class="form-group mt-3">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+            placeholder="Enter Password Again">
+        </div>
+        <hr>
+        <div class="btn-form d-grid gap-2 d-md-flex justify-content-center mt-4">
+          <a href="/" class="btn btn-major mx-0">
+            <i class="fas fa-arrow-circle-left"></i>Back
+          </a>
+          <button type="reset" class="btn btn-primary mx-0"><i class="fas fa-undo"></i>Reset</button>
+          <button class="btn btn-major mx-0" type="submit">
+            <i class="fas fa-save"></i>Save
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
