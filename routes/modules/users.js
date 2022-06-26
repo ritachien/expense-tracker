@@ -13,13 +13,15 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/users/login'
+  failureRedirect: '/users/login',
+  failureFlash: true
 }))
 
 // Routes for logout ===============================
 router.get('/logout', (req, res) => {
   req.logout(err => {
     if (err) return next(err)
+    req.flash('success_msg', '你已經成功登出。')
     res.redirect('/users/login')
   })
 })
@@ -61,7 +63,7 @@ router.post('/register', async (req, res) => {
     // Case: If email is registered
     if (user) {
       error_msg.push({ message: '這個 Email 已經註冊過了。' })
-      res.render('register', { error_msg, name, email })
+      return res.render('register', { error_msg, name, email })
     }
 
     // Case: Email is not yet registered

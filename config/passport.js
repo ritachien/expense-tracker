@@ -12,8 +12,8 @@ module.exports = app => {
 
   // Set Local Strategy
   passport.use(new LocalStrategy(
-    { usernameField: 'email' },  // Change argument from default value
-    async (email, password, done) => {
+    { usernameField: 'email', passReqToCallback: true },
+    async (req, email, password, done) => {
       try {
         const user = await User.findOne({ email })
 
