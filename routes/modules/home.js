@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     categoryFromDb.forEach(item => category[item._id] = item)
 
     // Get records from database and
-    const recordsFromDb = await Record.find({ userId }).lean()
+    const recordsFromDb = await Record.find({ userId }).lean().sort('-id')
     const records = []
     recordsFromDb.forEach(item => {
       //  Get related icon
