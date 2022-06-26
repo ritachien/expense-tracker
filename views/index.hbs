@@ -26,7 +26,7 @@
             </div>
             <div class="col">{{this.amount}}</div>
             <div class="col">
-              <button class="btn btn-primary">修改</button>
+              <a href="/records/{{this._id}}/edit" class="btn btn-primary">修改</a>
               <button class="btn btn-danger">刪除</button>
             </div>
           </div>
@@ -34,7 +34,7 @@
         {{/each}}
       </ul>
     </div>
-
+    <a href="/records/new" class="btn btn-primary">新增項目</a>
   </div>
 
 
