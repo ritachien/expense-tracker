@@ -2,6 +2,17 @@
 A web app to manage personal expenses.  
 Check it out: https://fierce-basin-30554.herokuapp.com  
 
+There are 2 test user provided. Try out features via accounts provided below.  
+```md
+# User 小明
+Email: user1@example.com
+Password: 12345678
+
+# User 小美
+Email: user2@example.com
+Password: 12345678
+```
+
 ## Features  
 ### User Account related  
 :star: Login / register via Facebook or Google.  
