@@ -2,7 +2,20 @@
   <div class="col-md-10 mx-auto">
 
     {{!-- Category selections --}}
-
+    <div class="form-group mt-3">
+      <form action="/" method="POST">
+        <select name="categorySelect" id="categorySelect" onchange="this.form.submit()" class="form-control">
+          {{#if categorySelected}}
+          <option value="{{categorySelected}}" selected>{{categorySelected}}</option>
+          {{else}}
+          <option value="全部" selected>全部</option>
+          {{/if}}
+          {{#each categoryFromDb}}
+          <option value="{{this._id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </form>
+    </div>
 
     {{!-- Total amount --}}
     <div class="total-amount">
