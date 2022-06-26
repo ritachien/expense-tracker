@@ -1,7 +1,6 @@
 // Include modules of Express
 const express = require('express')
 const router = express.Router()
-const dayjs = require('dayjs')
 
 const Record = require('../../models/record')
 const Category = require('../../models/category')
@@ -23,7 +22,7 @@ router.get('/', async (req, res) => {
       //  Get related icon
       item.icon = category[item.categoryId].icon
       // Format date
-      item.date = dayjs(item.date).format('YYYY-MM-DD')
+      item.date = item.date.toJSON().toString().slice(0, 10)
 
       records.push(item)
       totalAmount += item.amount

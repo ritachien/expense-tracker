@@ -7,7 +7,9 @@ const Record = require('../../models/record')
 router.get('/new', async (req, res) => {
   try {
     const categories = await Category.find().lean().sort('id')
-    res.render('edit', { categories })
+    const today = new Date()
+    const date = today.toJSON().toString().slice(0, 10)
+    res.render('edit', { categories, date })
   } catch (err) {
     console.log(err)
   }
@@ -38,6 +40,7 @@ router.get('/:id/edit', async (req, res) => {
     const record = await Record.findById(id).lean()
     const recordCategory = await Category.findById(record.categoryId).lean()
     record.category = recordCategory.name
+    record.date = record.date.toJSON().toString().slice(0, 10)
     res.render('edit', { categories, record })
   } catch (err) {
     console.log(err)
