@@ -62,4 +62,16 @@ router.post('/:id', async (req, res) => {
   }
 })
 
+// Delete record
+router.get('/:id/delete', async (req, res) => {
+  try {
+    const userId = req.user._id
+    const _id = req.params.id
+    await Record.findOneAndDelete({ _id, userId })
+    res.redirect('/')
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 module.exports = router
