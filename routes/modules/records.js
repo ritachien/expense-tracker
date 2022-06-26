@@ -44,7 +44,7 @@ router.get('/:id/edit', async (req, res) => {
   }
 })
 
-router.post('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const { name, date, amount, categoryId } = req.body
     const userId = req.user._id
@@ -63,7 +63,7 @@ router.post('/:id', async (req, res) => {
 })
 
 // Delete record
-router.get('/:id/delete', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const userId = req.user._id
     const _id = req.params.id
