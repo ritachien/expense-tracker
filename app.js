@@ -11,7 +11,7 @@ const usePassport = require('./config/passport')
 require('./config/mongoose')
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // View engine
 app.engine('hbs', exphbs.engine({ extname: 'hbs' }))
