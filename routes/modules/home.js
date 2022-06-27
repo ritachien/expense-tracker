@@ -10,57 +10,41 @@ router.get('/', async (req, res) => {
   try {
     let totalAmount = 0
     const userId = req.user._id
-    // Get all category data from database
-    const categoryFromDb = await Category.find().lean()
-    const category = {}
-    categoryFromDb.forEach(item => category[item._id] = item)
+    const categoryId = req.query.categorySelect || ''
+    const categories = await Category.find().sort('_id').lean()
 
-    // Get records from database and
-    const recordsFromDb = await Record.find({ userId }).lean()
-    const records = []
-    recordsFromDb.forEach(item => {
-      //  Get related icon
-      item.icon = category[item.categoryId].icon
-      // Format date
+    // Get records
+    let records
+    if (categoryId) {
+      records = await Record.find({ userId, categoryId }).lean()
+    } else {
+      records = await Record.find({ userId }).lean()
+    }
+
+    // Process each record for icon and date format
+    for (let item of records) {
+      categories.filter(category => {
+        if ((category._id).toString() === (item.categoryId).toString()) {
+          item.icon = category.icon
+        }
+      })
       item.date = item.date.toJSON().toString().slice(0, 10)
-
-      records.push(item)
       totalAmount += item.amount
+    }
+
+    // Process categories for filter
+    categories.forEach(item => {
+      if (item._id.toString() === categoryId) {
+        item.selected = 'selected'
+      }
     })
 
     // Render page
-    res.render('index', { totalAmount, records, categoryFromDb })
+    return res.render('index', { records, totalAmount, categories })
 
   } catch (err) {
     console.log(err)
   }
-})
-
-// Render records by selected category
-router.post('/', async (req, res) => {
-  let totalAmount = 0
-  const userId = req.user._id
-  const categoryId = req.body.categorySelect
-  // Get all category data from database
-  const categoryFromDb = await Category.find().lean()
-  const category = {}
-  categoryFromDb.forEach(item => category[item._id] = item)
-  const categorySelected = category[categoryId].name
-  // Get records from database and
-  const recordsFromDb = await Record.find({ userId, categoryId }).lean()
-  const records = recordsFromDb
-  records.forEach(item => {
-    //  Get related icon
-    item.icon = category[item.categoryId].icon
-    // Format date
-    item.date = item.date.toJSON().toString().slice(0, 10)
-    totalAmount += item.amount
-  })
-
-  // Render page
-  res.render('index', { totalAmount, records, categoryFromDb, categorySelected })
-
-
 })
 
 // Export module
