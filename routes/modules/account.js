@@ -11,42 +11,36 @@ router.get('/', (req, res) => {
   res.render('account', { user })
 })
 
-router.put('/', (req, res) => {
-  const id = req.user._id
-  const { name, password, confirmPassword } = req.body
+router.put('/', async (req, res) => {
+  try {
+    const id = req.user._id
+    const { name, password, confirmPassword } = req.body
 
-  // If no update to password
-  if (!password && !confirmPassword) {
-    return User.findByIdAndUpdate(id, { name })
-      .then(() => {
+    // If no update to password
+    if (!password && !confirmPassword) {
+      await User.findByIdAndUpdate(id, { name })
+      req.flash('success_msg', 'Update succeed!')
+      res.redirect('/account')
+    }
+
+    // If update password or confirmPassword
+    if (passport || confirmPassword) {
+      // If password NOT EQUALS confirmPassword
+      if (password !== confirmPassword) {
+        req.flash('error_msg', { message: '密碼與確認密碼不相符！' })
+        return res.redirect('/account')
+      }
+      // If password EQUALS confirmPassword
+      if (password === confirmPassword) {
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+        await User.findByIdAndUpdate(id, { name, password: hash })
         req.flash('success_msg', 'Update succeed!')
         res.redirect('/account')
-      })
-      .catch(err => console.log(err))
-  }
-
-  // If update password or confirmPassword
-  if (passport || confirmPassword) {
-    // If password NOT EQUALS confirmPassword
-    if (password !== confirmPassword) {
-      req.flash('error_msg', { message: '密碼與確認密碼不相符！' })
-      return res.redirect(`/account`)
+      }
     }
-    // If password EQUALS confirmPassword
-    if (password === confirmPassword) {
-      return bcrypt
-        .genSalt(10)
-        .then(salt => bcrypt.hash(password, salt))
-        .then(hash => User.findByIdAndUpdate(id, {
-          name,
-          password: hash
-        }))
-        .then(() => {
-          req.flash('success_msg', 'Update succeed!')
-          res.redirect('/account')
-        })
-        .catch(err => console.log(err))
-    }
+  } catch (err) {
+    console.log(err)
   }
 })
 

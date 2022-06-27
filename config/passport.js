@@ -65,32 +65,31 @@ module.exports = app => {
     clientSecret: process.env.GOOGLE_clientSecret,
     callbackURL: process.env.GOOGLE_callbackURL,
     profileFields: ['email', 'displayName']
-  }, (accessToken, refreshToken, profile, done) => {
-    const { name, email } = profile._json
-    User.findOne({ email })
-      .then(user => {
-        if (user) return done(null, user)
-        const randomPassword = Math.random().toString(36).slice(-8)
-        bcrypt
-          .genSalt(10)
-          .then(salt => bcrypt.hash(randomPassword, salt))
-          .then(hash => User.create({
-            name,
-            email,
-            password: hash
-          }))
-          .then(user => done(null, user))
-          .catch(err => done(err))
-      })
+  }, async (accessToken, refreshToken, profile, done) => {
+    try {
+      const { name, email } = profile._json
+      const user = await User.findOne({ email })
+
+      if (user) return done(null, user)
+      const randomPassword = Math.random().toString(36).slice(-8)
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(randomPassword, salt)
+      const newUser = await User.create({ name, email, password: hash })
+      return done(null, newUser)
+    } catch (err) {
+      console.log(err)
+    }
   }
   ))
 
   // Serialize and deserialize
   passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .lean()
-      .then(user => done(null, user))
-      .catch(err => done(err))
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id).lean()
+      return done(null, user)
+    } catch (err) {
+      console.log(err)
+    }
   })
 }
